@@ -1,0 +1,82 @@
+import asyncio
+from typing import List, Optional
+import discord
+from discord.ext import commands
+import json
+import os
+import sqlite3
+import logging
+import sys
+
+# Add project root to sys.path so imports work
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from Commands import ai_commands
+from SQL.helper import Helper
+import Commands
+
+# Load config
+try:
+    with open("Keys/config.json", "r") as f:
+        config = json.load(f)
+        TOKEN = config.get("DiscordToken")
+        SERVER_ID = int(config.get("ServerID", 0))
+        if not TOKEN:
+            print("❌ Discord token is missing or invalid in config.json.")
+            exit()
+except Exception as e:
+    print(f"❌ Error reading config.json: {e}")
+    exit()
+
+# Check for SQL database
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+db_path = os.path.join(project_root, "SQL", "helper.db")
+
+if not os.path.isfile(db_path):
+    print("❌ helper.db is missing.")
+    exit()
+
+try:
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' LIMIT 1;")
+    print("SQL database loaded successfully.")
+    conn.close()
+except Exception as e:
+    print(f"❌ Failed to access helper.db: {e}")
+    exit()
+
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+
+# Intents
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
+intents.dm_messages = True
+# Instantiate the helper
+helper = Helper(db_path=db_path)
+
+class MyBot(commands.Bot):
+    def __init__(self):  
+        super().__init__(command_prefix="!", intents=intents)
+
+    async def setup_hook(self):
+        await self.load_extension('Commands.ai_commands')
+        await self.load_extension('Commands.misc_commands')
+        synced = await self.tree.sync()
+        print(f"Cog loaded and slash commands synced. {len(synced)} commands synced globally.")
+
+    async def on_ready(self):
+        print(f"✅ Logged in as {self.user} ({self.user.id})")
+        
+bot = MyBot()
+
+## Async main entry point
+async def main():
+    async with bot:
+        await bot.start(TOKEN)
+
+# Run main
+if __name__ == "__main__":
+    asyncio.run(main())
