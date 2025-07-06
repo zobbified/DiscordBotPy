@@ -48,6 +48,5 @@ class BasicCommands(commands.Cog):
     async def about(self, interaction: discord.Interaction):
         await interaction.response.send_message("I'm a bot created by ZobbifAI. I can help you with various tasks and provide information. Use `/help` to see what I can do!")
 
-
 async def setup(bot: commands.Bot):
     await bot.add_cog(BasicCommands(bot))
