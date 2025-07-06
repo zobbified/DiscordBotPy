@@ -1,7 +1,7 @@
-import asyncio
-from typing import List, Optional
-import discord
 from discord.ext import commands
+from SQL.helper import Helper
+import asyncio
+import discord
 import json
 import os
 import sqlite3
@@ -11,9 +11,6 @@ import sys
 # Add project root to sys.path so imports work
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from Commands import ai_commands
-from SQL.helper import Helper
-import Commands
 
 # Load config
 try:
@@ -56,20 +53,22 @@ intents.members = True
 intents.dm_messages = True
 # Instantiate the helper
 helper = Helper(db_path=db_path)
+print("helper dbpath: " + db_path)
 
 class MyBot(commands.Bot):
     def __init__(self):  
         super().__init__(command_prefix="!", intents=intents)
 
     async def setup_hook(self):
-        await self.load_extension('Commands.ai_commands')
-        await self.load_extension('Commands.misc_commands')
-        synced = await self.tree.sync()
-        print(f"Cog loaded and slash commands synced. {len(synced)} commands synced globally.")
+        for filename in os.listdir("./Commands"):
+            if filename.endswith("_commands.py"):
+                await self.load_extension(f"Commands.{filename[:-3]}")
 
     async def on_ready(self):
-        print(f"✅ Logged in as {self.user} ({self.user.id})")
-        
+        synced = await self.tree.sync()
+        print(f"✅ Logged in as {self.user} ({self.user.id})\n"
+              f"{len(synced)} cogs synced globally.")
+
 bot = MyBot()
 
 ## Async main entry point

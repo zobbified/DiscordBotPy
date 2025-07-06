@@ -1,9 +1,7 @@
-from discord import app_commands, Interaction, Embed, ButtonStyle
-import discord
-from discord.ext import commands
+from Main.bot import discord
+from discord import Interaction, ButtonStyle, Embed
 from discord.ui import View, button, Button
 import random
-
 # Keep track of fired status per user
 fired_users = {}  # {user_id: bool}
 current_jobs = {}  # user_id -> job dict
