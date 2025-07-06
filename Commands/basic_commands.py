@@ -46,7 +46,7 @@ class BasicCommands(commands.Cog):
     @discord.app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.command(name="about", description="Info about the bot.")
     async def about(self, interaction: discord.Interaction):
-        await interaction.response.send_message("I'm a bot")
+        await interaction.response.send_message("I'm a bot created by ZobbifAI. I can help you with various tasks and provide information. Use `/help` to see what I can do!")
 
 
 async def setup(bot: commands.Bot):
