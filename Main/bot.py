@@ -11,7 +11,6 @@ import sys
 # Add project root to sys.path so imports work
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-
 # Load config
 try:
     with open("Keys/config.json", "r") as f:

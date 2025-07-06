@@ -41,7 +41,7 @@ class BasicCommands(commands.Cog):
     # @app_commands.command(name="ping", description="Check if the bot is alive.")
     # async def ping(self, interaction: discord.Interaction):
     #     await interaction.response.send_message("🏓 Pong!")
-    
+
     @discord.app_commands.allowed_installs(guilds=True, users=True)
     @discord.app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
     @app_commands.command(name="about", description="Info about the bot.")
