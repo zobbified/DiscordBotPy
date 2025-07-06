@@ -14,37 +14,39 @@ This bot supports a wide range of commands, categorized for easy navigation:
 
 **AI Commands:**
 
-* `/ai image gen` - Generate an image using AI.  (Cost: $0.50)
-* `/ai image edit` - Edit an existing image using AI. (Cost: $1.00)
-* `/ai text` - Generate text using AI. (Cost: $0.25)
-* `/ai random` - Generate a random image with FLUX.1. (Cost: $0.75)
-* `/ai characters` - See the list of AI characters you've created. (Cost: $0.25)
+* `/ai image gen` - Generate an image.
+* `/ai image edit` - Edit an existing image.
+* `/ai text` - Generate text.
+* `/ai random` - Generate a random image.
+* `/ai characters` - See the list of AI characters you've created.
 * `/ai create` - Create a new AI character for $1,000.
-* `/ai update` - Update an AI character's name, info, or image. (Cost: $0.50)
-* `/ai info` - Get the info/backstory of an AI character. (Cost: $0.25)
-* `/ai delete` - Delete an AI character by its number in your list. (Cost: $0.25)
+* `/ai update` - Update an AI character's name, info, or image.
+* `/ai info` - Get the info/backstory of an AI character.
+* `/ai delete` - Delete an AI character by its number in your list.
 
-**Utility Commands:**
+**Misc Commands:**
+
+* `/misc hello` - Say hello!
+* `/misc roll` - Roll a random number (1–100).
+* `/misc coinflip` - Flip a coin.
+* `/misc 8ball` - Ask the magic 8-ball a question.
+* `/misc speak` - Speak with ZobbifAI using random letters.
+* `/misc money` - Check how much money you have.
+* `/misc slot` - Play the slot machine with a bet!
+* `/misc job` - Work a job and earn money!
+* `/misc give` - Give money to another user.
+
+**Basic Commands:**
 
 * `/help` - List all available commands.
 * `/about` - Info about the bot, its creators, and how it works.
-* `/misc hello` - Say hello! (Cost: $0)
-* `/misc roll` - Roll a random number (1–100). (Cost: $0)
-* `/misc coinflip` - Flip a coin. (Cost: $0)
-* `/misc 8ball` - Ask the magic 8-ball a question. (Cost: $0.25)
-* `/misc speak` - Speak with ZobbifAI using random letters. (Cost: $0)
-* `/misc money` - Check how much money you have. (Cost: $0)
-* `/misc slot` - Play the slot machine with a bet! (Cost: $1.00 - $10.00)
-* `/misc job` - Work a job and earn money! (Cost: $0)
-* `/misc give` - Give money to another user. (Cost: Variable - Based on amount given)
-
 ---
 
 ##  Money & Economy
 
 ZobbifAI operates with a simple economy. You'll earn money through jobs and can spend it on AI image generation, slot machines, and more.
 
-* **Starting Balance:**  Each user begins with $10.
+* **Starting Balance:**  Each user begins with no money.
 * **Earning:** Jobs provide varying amounts of money.
 * **Spending:**  Costs are detailed above for each command.
 
@@ -63,6 +65,40 @@ Creating an AI character is the cornerstone of your experience.  Here's how it w
 
 ---
 
+## Future Plans
+
+Here are some upcoming improvements and ideas planned for the bot:
+
+🔁 Migration from Legacy C# Bot
+
+    Migrate existing Pokémon-related commands and systems from the original C# version of the bot.
+
+    Preserve core mechanics and user data where possible.
+
+    Streamline command structure to match the new Discord Application Command (slash command) style.
+
+💰 Expanded Economy & Job System
+
+    Add new job types with varying requirements and payouts.
+
+    Implement inventory, item trading, and rewards.
+
+    Add daily/weekly events and randomized job outcomes to increase engagement.
+
+🚀 Performance Improvements
+
+    Optimize command response times, especially for heavy image and AI generation tasks.
+
+    Use more asynchronous operations to reduce blocking and latency.
+
+🖼️ AI & Image Generation Upgrades
+
+    Consider alternatives to Flux for image generation to improve quality, speed, and flexibility.
+
+    Explore potential fallback or replacement options for text generation (Ollama is unlikely, but not ruled out).
+
+    Potentially integrate multiple services with automatic fallback or hybrid use.
+
 ##  Important Notes
 
 *   **Rate Limits:**  Please use the bot responsibly. Excessive use of commands may be temporarily throttled.
@@ -80,7 +116,7 @@ Creating an AI character is the cornerstone of your experience.  Here's how it w
 
 ##  Support
 
-If you have any questions, suggestions, or encounter any issues, please contact us through [Your Support Channel Link - if applicable].
+If you have any questions, suggestions, or encounter any issues, please contact us through [Discord](https://discord.gg/GbmcdRqkbC).
 
 ---
 
