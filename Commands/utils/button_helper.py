@@ -15,7 +15,7 @@ class DeleteButton(discord.ui.Button):
             await interaction.response.send_message("You can't delete someone else's character!", ephemeral=True)
             return
 
-        self.db.delete_girl(self.user_id, self.character_name)
+        self.db.delete_girl(self.character_name)
         
         await interaction.response.send_message(f"❌ Deleted character **{self.character_name}**.", ephemeral=True)
 

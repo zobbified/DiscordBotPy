@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS CachePokemon (
 );
 CREATE TABLE IF NOT EXISTS GirlsCache (
     GirlID INTEGER PRIMARY KEY AUTOINCREMENT,
-    UserID INTEGER NOT NULL,
     GirlName TEXT NOT NULL,
     GirlInfo TEXT NOT NULL,
     GirlImg TEXT NOT NULL
@@ -59,6 +58,7 @@ CREATE TABLE IF NOT EXISTS AiGenerationCache (
     GenerationCount INTEGER NOT NULL DEFAULT 0,
     LastGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 """
             )
 
@@ -175,34 +175,33 @@ ON CONFLICT(UserID) DO UPDATE SET Money = Money + ?
             result = cursor.fetchone()
             return float(result[0]) if result else 0.0
 
-    def save_girl(self, user_id: int, name: str, info: str, image: str):
+    def save_girl(self, name: str, info: str, image: str):
         with sqlite3.connect(self._db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
                 """
-INSERT INTO GirlsCache (UserID, GirlName, GirlInfo, GirlImg)
-VALUES (?, ?, ?, ?)
+INSERT INTO GirlsCache (GirlName, GirlInfo, GirlImg)
+VALUES (?, ?, ?)
 """,
-                (user_id, name, info, image),
+                (name, info, image),
             )
 
-    def delete_girl(self, user_id: int, name: str):
+    def delete_girl(self, name: str):
         with sqlite3.connect(self._db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
                 """
 DELETE FROM GirlsCache
-WHERE UserID = ? AND GirlName LIKE ?
+WHERE GirlName LIKE ?
 """,
-                (user_id, f"%{name}%"),
+                (f"%{name}%"),
             )
 
-    def get_girl(self, user_id: int) -> List[Tuple[str, str, str]]:
+    def get_girl(self) -> List[Tuple[str, str, str]]:
         with sqlite3.connect(self._db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT GirlName, GirlInfo, GirlImg FROM GirlsCache WHERE UserID = ?",
-                (user_id,),
+                "SELECT GirlName, GirlInfo, GirlImg FROM GirlsCache",
             )
             return [(row[0], row[1], row[2]) for row in cursor.fetchall()]
 
@@ -231,18 +230,20 @@ WHERE UserID = ? AND GirlName LIKE ?
                 (user_id,),
             )
             result = cursor.fetchone()
-            
+
             if result:
                 today = datetime.datetime.today().date()
                 last_updated = datetime.datetime.fromisoformat(result[1]).date()
                 if last_updated < today:
                     cursor.execute(
                         "UPDATE AiGenerationCache SET GenerationCount = 0, LastGenerated = ? WHERE UserID = ?",
-                        (datetime.datetime.now(), user_id)
+                        (datetime.datetime.now(), user_id),
                     )
-                print(f"Last updated: {last_updated}, Today: {today}\n"
-                      f"Generation count: {result[0]}\n")
-            
+                print(
+                    f"Last updated: {last_updated}, Today: {today}\n"
+                    f"Generation count: {result[0]}\n"
+                )
+
             return result[0] if result else 0
 
     def save_gen(self, user_id: int, count: int):

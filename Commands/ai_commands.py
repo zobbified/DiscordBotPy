@@ -145,14 +145,14 @@ class AICommands(commands.Cog):
         
         # Run the blocking function in a background thread
         response = await asyncio.to_thread(
-            ollama.chat, model="huihui_ai/llama3.2-abliterate", messages=char_chat_history, stream=False, think=False, options={"thinking": False}
+            ollama.chat, model="huihui_ai/gemma3-abliterated", messages=char_chat_history, stream=False, think=False, options={"thinking": False}
         )
         print (f"ollama response: {response}")
         char_chat_history.append(response.message)
         
-        if len(chat_history) > 2:
-            chat_history.pop(0)
-            chat_history.pop(1)
+        if len(char_chat_history) > 2:
+            char_chat_history.pop(0)
+            char_chat_history.pop(1)
         # Access the response content
         return response.message.content or "❌ No response."
     
@@ -169,7 +169,7 @@ class AICommands(commands.Cog):
 
         # Run the blocking function in a background thread
         response = await asyncio.to_thread(
-            ollama.chat, model="huihui_ai/llama3.2-abliterate", messages=chat_history, stream=False, think=False, options={"thinking": False}
+            ollama.chat, model="huihui_ai/gemma3-abliterated", messages=chat_history, stream=False, think=False, options={"thinking": False}
         )
         print (f"ollama response: {response}")
         chat_history.append(response.message)
